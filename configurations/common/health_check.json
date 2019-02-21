@@ -1,0 +1,10 @@
+{
+    "httpRequest": {
+        "path": "/",
+        "method": "GET"
+    },
+    "httpResponse": {
+        "body": "Mock server is up and running!",
+        "statusCode": 200
+    }
+}

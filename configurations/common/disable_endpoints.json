@@ -1,0 +1,24 @@
+{
+    "httpRequest": {
+        "path": "/mockserver/expectation"
+    },
+    "httpResponse": {
+        "body": "Creating expectations remotely is not allowed! Add the wanted expectations to the GitHub repository configuration files and redeploy the server to Google Cloud."
+    }
+},
+{
+    "httpRequest": {
+        "path": "/mockserver/clear"
+    },
+    "httpResponse": {
+        "body": "Clearing expectations remotely is not allowed! Remove the wanted expectations from the GitHub repository configuration files and redeploy the server to Google Cloud."
+    }
+},
+{
+    "httpRequest": {
+        "path": "/mockserver/reset"
+    },
+    "httpResponse": {
+        "body": "Resetting the mock server is not allowed! Remove the wanted expectations from the GitHub repository configuration files and redeploy the server to Google Cloud."
+    }
+}
