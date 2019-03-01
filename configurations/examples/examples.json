@@ -1,0 +1,53 @@
+{
+    "httpRequest": {
+        "path": "/delay/1"
+    },
+    "httpResponse": {
+        "body": "Delayed 1 second",
+        "delay": {
+            "timeUnit": "SECONDS",
+            "value": 1
+        }
+    }
+},
+{
+    "httpRequest": {
+        "path": "/delay/3"
+    },
+    "httpResponse": {
+        "body": "Delayed 3 seconds",
+        "delay": {
+            "timeUnit": "SECONDS",
+            "value": 3
+        }
+    }
+},
+{
+    "httpRequest": {
+        "path": "/delay/5"
+    },
+    "httpResponse": {
+        "body": "Delayed 5 seconds",
+        "delay": {
+            "timeUnit": "SECONDS",
+            "value": 5
+        }
+    }
+},
+{
+  "httpRequest" : {
+    "method" : "POST",
+    "path" : "/xml",
+    "headers" : {
+      "Accept" : [ "application/xml" ],
+      "Content-Type" : [ "application/xml" ]
+    },
+    "body" : {
+      "type" : "XML",
+      "xml" : "<book name=\"BOOK\"><title>TITLE</title></book>"
+    }
+  },
+  "httpResponse" : {
+    "body" : "<book name=\"ANOTHER BOOK\"><title>ANOTHER TITLE</title></book>"
+  }
+}
