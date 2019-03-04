@@ -1,0 +1,16 @@
+{
+    "httpRequest" : {
+      "method" : "POST",
+      "path" : "/posr",
+      "headers" : {
+        "Content-Type" : [ "application/xml" ]
+      },
+      "body" : {
+        "type" : "XPATH",
+        "xpath" : "/cXML/Request/PunchOutSetupRequest"
+      }
+    },
+    "httpResponse" : {
+      "body" : "<?xml version=\"1.0\" encoding=\"UTF-8\"?><!DOCTYPE cXML SYSTEM \"http://xml.cXML.org/schemas/cXML/1.2.040/cXML.dtd\"><cXML payloadID=\"12345.67890@buyer.com\" timestamp=\"2018-04-07T16:16:53-05:00\"><Response><Status code=\"200\" text=\"OK\"></Status><PunchOutSetupResponse><StartPage><URL>https://www.vendor.org/punchout?sid=12345</URL></StartPage></PunchOutSetupResponse></Response></cXML>"
+    }
+}
