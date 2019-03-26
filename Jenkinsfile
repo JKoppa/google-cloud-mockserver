@@ -48,6 +48,7 @@ timestamps {
                 }
             }
 
+/*
             stage('Deploy Mockserver to GC skynet') {
                 timeout(10) {
                     // Use Gcloud tools to authenticate with GC
@@ -68,8 +69,6 @@ timestamps {
                     }
                 }
             }
-        //}
-
-    }
+    */}
 
 }
