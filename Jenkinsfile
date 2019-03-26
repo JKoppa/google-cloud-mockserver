@@ -27,6 +27,20 @@ timestamps {
             }
         }
 
+
+        if (utils.isMasterBuild()) {    
+            stage('Push Docker image to GC registry') {
+                timeout(10) {
+                    // Push to Google Cloud Docker registry
+                    sh "docker tag ${env.DOCKER_IMAGE_NAME} ${env.DOCKER_IMAGE_TAG}"
+
+                    withCredentials([string(credentialsId: 'google-cloud-service-account', variable: 'SECRET_JSON')]) {
+                        echo "Received json: ${SECRET_JSON}!"
+                    }
+                }
+            }
+        }
+
      
     }
 
