@@ -17,6 +17,7 @@ timestamps {
                 env.DOCKER_IMAGE_NAME = "google-cloud-mockserver"
                 env.PROJECT_VERSION = utils.runSh("sed -nE 's/##.*\\[([0-9]+\\.[0-9]+\\.[0-9]+)\\].*/\\1/p' CHANGELOG.md | head -n1")
                 env.DOCKER_IMAGE_TAG = "gcr.io/seventh-chassis-87509/${env.DOCKER_IMAGE_NAME}:${env.PROJECT_VERSION}"
+                env.DOCKER_REGISTRY_URL = "https://gcr.io"
                 currentBuild.displayName = env.DOCKER_IMAGE_TAG
             }
         }
@@ -35,7 +36,13 @@ timestamps {
                     sh "docker tag ${env.DOCKER_IMAGE_NAME} ${env.DOCKER_IMAGE_TAG}"
 
                     withCredentials([string(credentialsId: 'google-cloud-service-account', variable: 'SECRET_JSON')]) {
-                        echo "Received json: ${SECRET_JSON}!"
+                         
+                        // Authenticate with registry.
+                        sh "echo '${SECRET_JSON}' | docker login -u _json_key --password-stdin ${env.DOCKER_REGISTRY_URL}"
+
+                        // Publish image to GC registry.
+                        sh "docker push ${env.DOCKER_IMAGE_TAG}"
+
                     }
                 }
             }
