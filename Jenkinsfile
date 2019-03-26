@@ -17,6 +17,7 @@ timestamps {
                 env.DOCKER_IMAGE_NAME = "google-cloud-mockserver"
                 env.PROJECT_VERSION = utils.runSh("sed -nE 's/##.*\\[([0-9]+\\.[0-9]+\\.[0-9]+)\\].*/\\1/p' CHANGELOG.md | head -n1")
                 env.DOCKER_IMAGE_TAG = "gcr.io/seventh-chassis-87509/${env.DOCKER_IMAGE_NAME}:${env.PROJECT_VERSION}"
+                env.SERVICE_ACCOUNT = "jenkins-pipeline@seventh-chassis-87509.iam.gserviceaccount.com"
                 env.DOCKER_REGISTRY_URL = "https://gcr.io"
                 currentBuild.displayName = env.DOCKER_IMAGE_TAG
             }
@@ -37,17 +38,38 @@ timestamps {
 
                     withCredentials([string(credentialsId: 'google-cloud-service-account', variable: 'SECRET_JSON')]) {
                          
-                        // Authenticate with registry.
+                        // Authenticate with GC registry.
                         sh "echo '${SECRET_JSON}' | docker login -u _json_key --password-stdin ${env.DOCKER_REGISTRY_URL}"
 
-                        // Publish image to GC registry.
+                        // Push image to GC registry.
                         sh "docker push ${env.DOCKER_IMAGE_TAG}"
 
                     }
                 }
             }
-        //}
 
+            stage('Deploy Mockserver to GC skynet') {
+                timeout(10) {
+                    // Use Gcloud tools to authenticate with GC
+                    sh "docker tag ${env.DOCKER_IMAGE_NAME} ${env.DOCKER_IMAGE_TAG}"
+
+                    withCredentials([string(credentialsId: 'google-cloud-service-account', variable: 'SECRET_JSON')]) {
+                        //Create GC json file from credentials
+                        sh "echo '${SECRET_JSON}' > gc.json"
+                        
+                        // Authenticate service account with gcloud
+                        sh "gcloud auth activate-service-account ${SERVICE_ACCOUNT} --key-file=gc.json --project=seventh-chassis-87509"
+                        
+                        // Select mock-servers-cluster as the cluster context
+                        sh "gcloud container clusters get-credentials mock-servers-cluster --zone=us-central1-a"
+
+                        sh "kubectl get pods"
+
+                    }
+                }
+            }
+        //}
+gcloud container clusters get-credentials mock-servers-cluster --zone=us-central1-a
      
     }
 
