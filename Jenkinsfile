@@ -7,7 +7,7 @@ def utils = new Utilities()
 def k8sDocker = new Docker()
 
 timestamps {
-    node() {
+    node('agent-gcloud') {
         stage('Checkout') {
             timeout(10) {
                 def scmVars = checkout scm
