@@ -30,7 +30,7 @@ timestamps {
         }
 
 
-        //if (utils.isMasterBuild()) {    
+        if (utils.isMasterBuild()) {    
             stage('Push Docker image to GC registry') {
                 timeout(10) {
                     // Push to Google Cloud Docker registry
@@ -47,7 +47,7 @@ timestamps {
                     }
                 }
             }
-
+        }
 /*
             stage('Deploy Mockserver to GC skynet') {
                 timeout(10) {
