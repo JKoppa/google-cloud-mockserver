@@ -69,8 +69,7 @@ timestamps {
                 }
             }
         //}
-gcloud container clusters get-credentials mock-servers-cluster --zone=us-central1-a
-     
+
     }
 
 }
