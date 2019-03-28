@@ -35,15 +35,14 @@ timestamps {
                 timeout(10) {
                     // Push to Google Cloud Docker registry
                     sh "docker tag ${env.DOCKER_IMAGE_NAME} ${env.DOCKER_IMAGE_TAG}"
-
-                    withCredentials([string(credentialsId: 'google-cloud-service-account', variable: 'SECRET_JSON')]) {
+                    
+                    withCredentials([usernamePassword(credentialsId: 'google-cloud-service-account', usernameVariable: 'USERNAME', passwordVariable: 'SECRET_JSON')]) {
                          
                         // Authenticate with GC registry.
                         sh "echo '${SECRET_JSON}' | docker login -u _json_key --password-stdin ${env.DOCKER_REGISTRY_URL}"
 
                         // Push image to GC registry.
                         sh "docker push ${env.DOCKER_IMAGE_TAG}"
-
                     }
                 }
             }
