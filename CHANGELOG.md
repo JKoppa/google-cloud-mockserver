@@ -6,6 +6,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [1.1.0] - 2019-05-08
+
+### Added
+
+- Automated deployment pipeline on each new PR. 3 replicas in Google cloud for mockserver.
+
 ## [1.0.0] - 2019-03-26
 
 ### Added
