@@ -1,21 +1,15 @@
-Quick preliminary readme on how to update mockserver expectations and push to Google cloud:
+Quick preliminary readme on how to update mockserver expectations.
 
-1. Add your new expectations to the `configurations` folder following the practices of other files that are there. You must create a new directory (such as common) and put all your configuration files in it. There is a shell script that will combine all configurations into one and feed it to the mock server during startup
+1. Fork this repository.
 
-2. Build the docker image via 
-`docker build -t gcr.io/seventh-chassis-87509/mockserver .`
+2. Add your new expectations to the `configurations` folder following the practices of other files that are there. You must create a new directory (such as common) and put all your configuration files in it. There is a shell script that will combine all configurations into one and feed it to the mock server during startup
 
-3. Run it locally and verify your new expectations work using Postman or cURL or something.
-`docker run -p 1080:1080 gcr.io/seventh-chassis-87509/mockserver`
+3. Build the docker image locally via 
+`docker build -t mockserver .`
 
-4. Push your image to the Google cloud registry (make sure you have installed gcloud sdk and authed the docker registry access)
-https://cloud.google.com/container-registry/docs/advanced-authentication
-`docker push gcr.io/seventh-chassis-87509/mockserver`
+4. Run it locally and verify your new expectations work using Postman or cURL or something.
+`docker run -p 1080:1080 mockserver`
 
-5. Select the test server cluster and project
-`gcloud container clusters get-credentials http-bin-cluster-1 --zone us-central1-a --project seventh-chassis-87509`
+5. Once functionality has been verified, create a PR to merge your fork into the master branch. 
 
-6. Run the new image (you might have to kill the old one first).
-`kubectl run mockserver --image=gcr.io/seventh-chassis-87509/mockserver --port=1080`
-
-The new expectations should now be live.
+6. Once merged, Jenkins will automatically deploy the new version of mockserver to Google Cloud and your new expectations should be live.
